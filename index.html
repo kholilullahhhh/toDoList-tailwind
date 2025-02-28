@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-Do List Application</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        #todo-list {
+            list-style-type: none;
+            padding: 0;
+        }
+        .completed {
+            text-decoration: line-through;
+            color: gray;
+        }
+    </style>
+</head>
+<body>
+    <h1>To-Do List</h1>
+    <input type="text" id="task-input" placeholder="Enter a new task">
+    <button onclick="addTask()">Add Task</button>
+    <ul id="todo-list"></ul>
+
+    <script>
+        // Array to store tasks
+        let tasks = [];
+
+        // Function to add a new task
+        function addTask() {
+            const taskInput = document.getElementById('task-input');
+            const taskText = taskInput.value.trim();
+
+            if (taskText !== "") {
+                tasks.push({ text: taskText, completed: false });
+                taskInput.value = "";
+                displayTasks();
+            }
+        }
+
+        // Function to display tasks
+        function displayTasks() {
+            const todoList = document.getElementById('todo-list');
+            todoList.innerHTML = "";
+
+            tasks.forEach((task, index) => {
+                const li = document.createElement('li');
+                li.textContent = task.text;
+
+                if (task.completed) {
+                    li.classList.add('completed');
+                }
+
+                // Add a click event to mark task as completed
+                li.addEventListener('click', () => {
+                    toggleCompleted(index);
+                });
+
+                todoList.appendChild(li);
+            });
+        }
+
+        // Function to toggle task completion
+        function toggleCompleted(index) {
+            tasks[index].completed = !tasks[index].completed;
+            displayTasks();
+        }
+
+        // Initial display of tasks
+        displayTasks();
+    </script>
+</body>
+</html>
